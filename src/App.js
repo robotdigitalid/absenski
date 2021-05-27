@@ -13,13 +13,10 @@ function App() {
   const [approvers, setApprovers] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const fetchData = async () => {
-    const {data: roles} = await axios.get('/exec?table=role');
-    setRoles(roles);
-    const {data: projectOwners} = await axios.get('/exec?table=project-owner');
-    setProjectOwners(projectOwners);
-    const {data: approvers} = await axios.get('/exec?table=approver');
-    setApprovers(approvers);
+  const fetchData = () => {
+    axios.get('/exec?table=role').then(({data: roles}) => setRoles(roles));
+    axios.get('/exec?table=project-owner').then(({data: projectOwners}) => setProjectOwners(projectOwners));
+    axios.get('/exec?table=approver').then(({data: approvers}) => setApprovers(approvers));
   };
 
   const handleSubmit = (e) => {
