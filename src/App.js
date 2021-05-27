@@ -24,6 +24,7 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    signaturePad.clear();
     const data = {};
     for (let i = 0; i < e.target.length; i++) {
       const key = e.target[i].name, value = e.target[i][e.target[i].type === 'checkbox' ? 'checked' : 'value'];
@@ -39,6 +40,8 @@ function App() {
   return (
     <div className='container m-auto bg-gray-100 p-10 rounded-xl'>
       <form onSubmit={handleSubmit}>
+
+        {loading && 'Loading...'}
 
         <div className="mt-10 sm:mt-0">
           <div className="md:grid md:grid-cols-3 md:gap-6">
