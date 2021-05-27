@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import SignatureCanvas from 'react-signature-canvas';
 import axios from 'axios';
 
-const url = 'https://script.google.com/macros/s/AKfycbzZNfyFSydpt_rEwqUuSo88B1-6s-aenB07LR8KRQrVN702jlWgmXOnP2KKWarFL-g/exec';
+const url = 'https://script.google.com/macros/s/AKfycbzZNfyFSydpt_rEwqUuSo88B1-6s-aenB07LR8KRQrVN702jlWgmXOnP2KKWarFL-g';
 axios.defaults.baseURL = url;
 
 function App() {
@@ -14,23 +14,23 @@ function App() {
   const [loading, setLoading] = useState(false);
 
   const fetchData = async () => {
-    const {data: roles} = await axios.get('?table=role');
+    const {data: roles} = await axios.get('/exec?table=role');
     setRoles(roles);
-    const {data: projectOwners} = await axios.get('?table=project-owner');
+    const {data: projectOwners} = await axios.get('/exec?table=project-owner');
     setProjectOwners(projectOwners);
-    const {data: approvers} = await axios.get('?table=approver');
+    const {data: approvers} = await axios.get('/exec?table=approver');
     setApprovers(approvers);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    signaturePad.clear();
+    if (!signaturePad) console.log('No signature pad');
     const data = {};
     for (let i = 0; i < e.target.length; i++) {
       const key = e.target[i].name, value = e.target[i][e.target[i].type === 'checkbox' ? 'checked' : 'value'];
       if (key) data[key] = value;
     }
-    axios.post('/', data).then(() => setLoading(false))
+    axios.post('/exec', data).then(() => setLoading(false))
   };
 
   useEffect(() => {
